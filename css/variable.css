@@ -1,0 +1,17 @@
+:root {
+  /* Color Palette */
+  --bg-primary: #0D0E15;
+  --bg-surface: #1A1C29;
+  --border-color: #2D3142;
+  
+  --neon-purple: #A855F7;
+  --neon-cyan: #06B6D4;
+  --neon-pink: #EC4899;
+  
+  --text-main: #F3F4F6;
+  --text-muted: #9CA3AF;
+
+  /* Fonts */
+  --font-title: 'Orbitron', sans-serif;
+  --font-body: 'Inter', sans-serif;
+}
