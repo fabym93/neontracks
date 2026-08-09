@@ -73,7 +73,7 @@ export const QUESTION_BANK = {
 /**
  * Helper to get random questions based on selected genre
  */
-export function getRandomQuestions(genre = 'rock', amount = 10) {
+export function getRandomQuestions (genre = 'rock', amount = 10) {
   const pool = QUESTION_BANK[genre] || QUESTION_BANK.rock;
   // Shuffle array using Fisher-Yates logic
   const shuffled = [...pool].sort(() => 0.5 - Math.random());

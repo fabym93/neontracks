@@ -2,57 +2,57 @@
  * AudioPlayer - Web Audio API synthesizer for Neon Tracks SFX
  */
 export class AudioPlayer {
-  constructor() {
-    this.ctx = null;
-    this.enabled = true;
-  }
-
-  init() {
-    if (!this.ctx) {
-      const AudioCtx = window.AudioContext || window.webkitAudioContext;
-      this.ctx = new AudioCtx();
+    constructor() {
+        this.ctx = null;
+        this.enabled = true;
     }
-  }
 
-  playCorrect() {
-    if (!this.enabled) return;
-    this.init();
+    init() {
+        if (!this.ctx) {
+            const AudioCtx = window.AudioContext || window.webkitAudioContext;
+            this.ctx = new AudioCtx();
+        }
+    }
 
-    const osc = this.ctx.createOscillator();
-    const gain = this.ctx.createGain();
+    playCorrect() {
+        if (!this.enabled) return;
+        this.init();
 
-    osc.type = 'sine';
-    osc.frequency.setValueAtTime(523.25, this.ctx.currentTime); // C5
-    osc.frequency.exponentialRampToValueAtTime(880, this.ctx.currentTime + 0.15); // A5
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
 
-    gain.gain.setValueAtTime(0.2, this.ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.15);
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(523.25, this.ctx.currentTime); // C5
+        osc.frequency.exponentialRampToValueAtTime(880, this.ctx.currentTime + 0.15); // A5
 
-    osc.connect(gain);
-    gain.connect(this.ctx.destination);
+        gain.gain.setValueAtTime(0.2, this.ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.15);
 
-    osc.start();
-    osc.stop(this.ctx.currentTime + 0.15);
-  }
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
 
-  playWrong() {
-    if (!this.enabled) return;
-    this.init();
+        osc.start();
+        osc.stop(this.ctx.currentTime + 0.15);
+    }
 
-    const osc = this.ctx.createOscillator();
-    const gain = this.ctx.createGain();
+    playWrong() {
+        if (!this.enabled) return;
+        this.init();
 
-    osc.type = 'sawtooth';
-    osc.frequency.setValueAtTime(180, this.ctx.currentTime);
-    osc.frequency.exponentialRampToValueAtTime(110, this.ctx.currentTime + 0.25);
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
 
-    gain.gain.setValueAtTime(0.25, this.ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.25);
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(180, this.ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(110, this.ctx.currentTime + 0.25);
 
-    osc.connect(gain);
-    gain.connect(this.ctx.destination);
+        gain.gain.setValueAtTime(0.25, this.ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.25);
 
-    osc.start();
-    osc.stop(this.ctx.currentTime + 0.25);
-  }
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+
+        osc.start();
+        osc.stop(this.ctx.currentTime + 0.25);
+    }
 }

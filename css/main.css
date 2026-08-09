@@ -17,3 +17,14 @@ body {
   align-items: center;
   justify-content: center;
 }
+
+
+/* Accessibility: High-contrast Focus Ring for Keyboard Navigation (WCAG) */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 3px solid var(--neon-cyan) !important;
+  outline-offset: 4px !important;
+  box-shadow: 0 0 12px var(--neon-cyan) !important;
+}

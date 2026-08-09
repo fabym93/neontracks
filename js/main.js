@@ -1,7 +1,7 @@
-import { UIController } from './uiController.js';
-import { getRandomQuestions } from './questionBank.js';
-import { StorageService } from './storageService.js';
-import { AudioPlayer } from './audioPlayer.js';
+import { UIController } from './uicontroller.js';
+import { getRandomQuestions } from './questionbank.js';
+import { StorageService } from './storageservice.js';
+import { AudioPlayer } from './audioplayer.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   const ui = new UIController();
@@ -15,6 +15,9 @@ document.addEventListener('DOMContentLoaded', () => {
   let streak = 0;
   let timerInterval = null;
   let currentQuestion = null;
+
+  // Render Leaderboard on initial load
+  ui.renderLeaderboard(StorageService.getHighScores());
 
   // 1. Config Form Submit (Start Game)
   const configForm = document.getElementById('game-config-form');
@@ -132,12 +135,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const currentGenre = document.getElementById('genre-select').value;
 
     // Save score to localStorage
-    StorageService.saveScore({
+    const updatedScores = StorageService.saveScore({
       totalScore: score,
       accuracy: finalAccuracy,
       rank: rank,
       genre: currentGenre
     });
+
+    // Update Leaderboard View
+    ui.renderLeaderboard(updatedScores);
 
     ui.showSummary({
       totalScore: score,
@@ -145,7 +151,8 @@ document.addEventListener('DOMContentLoaded', () => {
       accuracy: finalAccuracy,
       correctCount: Math.floor(score / 750),
       totalQuestions: activeQuestions.length,
-      avgTime: 3.2
+      avgTime: 3.2,
+      rank: rank
     });
   }
 
@@ -165,5 +172,35 @@ document.addEventListener('DOMContentLoaded', () => {
     score = 0;
     streak = 0;
     ui.showHome();
+  });
+
+  // 9. Global Keyboard Navigation Listener
+  document.addEventListener('keydown', (e) => {
+    const quizView = document.getElementById('quiz-view');
+    const reviewModal = document.getElementById('review-modal');
+
+    // Keyboard Shortcuts for Quiz Options (1-4 or A-D)
+    if (!quizView.classList.contains('hidden') && reviewModal.classList.contains('hidden')) {
+      const keyMap = {
+        '1': 0, 'a': 0, 'A': 0,
+        '2': 1, 'b': 1, 'B': 1,
+        '3': 2, 'c': 2, 'C': 2,
+        '4': 3, 'd': 3, 'D': 3
+      };
+
+      if (e.key in keyMap) {
+        const buttons = document.querySelectorAll('.quiz-card .btn-option');
+        const targetBtn = buttons[keyMap[e.key]];
+        if (targetBtn && !targetBtn.disabled) {
+          targetBtn.click();
+        }
+      }
+    }
+
+    // Enter or Space to advance from Review Modal
+    if (!reviewModal.classList.contains('hidden') && (e.key === 'Enter' || e.key === ' ')) {
+      e.preventDefault();
+      document.getElementById('btn-next-question').click();
+    }
   });
 });
