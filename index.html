@@ -70,6 +70,38 @@
   </main>
 
   <script type="module" src="./js/main.js"></script>
+
+<!-- Post-Answer Review Modal (Hidden by default using the 'hidden' class) -->
+  <div id="review-modal" class="modal-overlay hidden">
+    <div class="modal-card">
+      
+      <!-- Modal Header / Status -->
+      <div class="modal-header">
+        <span class="modal-badge success">CORRECT!</span>
+        <h3 class="modal-score-earned">+750 PTS</h3>
+      </div>
+
+      <!-- Track Information -->
+      <div class="modal-body">
+        <div class="track-info">
+          <p class="track-title">Bohemian Rhapsody</p>
+          <p class="track-artist">Queen • 1975</p>
+        </div>
+
+        <!-- Applied Multiplier Tag -->
+        <div class="multiplier-tag">
+          <span>Active Streak: <strong>2x Multiplier 🔥</strong></span>
+        </div>
+      </div>
+
+      <!-- Next Question Button -->
+      <button id="btn-next-question" class="btn-neon-primary">
+        <span>NEXT QUESTION →</span>
+      </button>
+
+    </div>
+  </div>
+
 </body>
 
 </html>
