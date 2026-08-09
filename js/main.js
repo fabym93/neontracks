@@ -1,5 +1,5 @@
 import { fetchTracksFromiTunes } from './apiservice.js';
-import { generateQuestion } from './gameEngine.js';
+import { generateQuestion } from './gameengine.js';
 import { TimerModule } from './timermodule.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
