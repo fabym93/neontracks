@@ -1,8 +1,11 @@
 import { UIController } from './uiController.js';
 import { getRandomQuestions } from './questionBank.js';
+import { StorageService } from './storageService.js';
+import { AudioPlayer } from './audioPlayer.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   const ui = new UIController();
+  const audio = new AudioPlayer();
 
   // State Management
   let activeQuestions = [];
@@ -35,7 +38,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 2. Start Question Round
   function startNewRound() {
-    // Check if we ran out of questions or reached max limit
     if (currentQuestionIndex >= activeQuestions.length) {
       finishGame();
       return;
@@ -82,11 +84,13 @@ document.addEventListener('DOMContentLoaded', () => {
     ui.highlightAnswers(selectedIndex, currentQuestion.correctIndex);
 
     if (isCorrect) {
+      audio.playCorrect();
       const basePoints = 750;
       const multiplier = streak >= 3 ? 2 : 1;
       score += basePoints * multiplier;
       streak += 1;
     } else {
+      audio.playWrong();
       streak = 0;
     }
 
@@ -115,13 +119,30 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // 7. Finish Game Summary Trigger
+  // 7. Finish Game Summary Trigger & Save High Score
   function finishGame() {
     const accuracy = Math.round((score > 0 ? (currentQuestionIndex / activeQuestions.length) * 100 : 0));
+    const finalAccuracy = accuracy > 100 ? 100 : accuracy;
+
+    let rank = 'GLITCH NOOB';
+    if (finalAccuracy >= 90) rank = 'CYBER LEGEND';
+    else if (finalAccuracy >= 70) rank = 'NEON MASTER';
+    else if (finalAccuracy >= 50) rank = 'BEAT RUNNER';
+
+    const currentGenre = document.getElementById('genre-select').value;
+
+    // Save score to localStorage
+    StorageService.saveScore({
+      totalScore: score,
+      accuracy: finalAccuracy,
+      rank: rank,
+      genre: currentGenre
+    });
+
     ui.showSummary({
       totalScore: score,
       maxStreak: streak,
-      accuracy: accuracy > 100 ? 100 : accuracy,
+      accuracy: finalAccuracy,
       correctCount: Math.floor(score / 750),
       totalQuestions: activeQuestions.length,
       avgTime: 3.2
