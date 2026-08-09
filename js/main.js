@@ -1,31 +1,32 @@
-import { fetchTracksFromiTunes, getValidTrackWithLyrics } from './apiservice.js';
-import { generateQuestion } from './gameengine.js';
+import { fetchTracksFromiTunes } from './apiservice.js';
+import { generateQuestion } from './gameEngine.js';
+import { TimerModule } from './timermodule.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
   const statusText = document.getElementById('status-text');
-  statusText.textContent = "Loading Game Engine Test...";
+  statusText.textContent = "Initializing Timer Test...";
 
-  // 1. Fetch a batch of tracks
-  const tracks = await fetchTracksFromiTunes('bts', 10);
+  const tracks = await fetchTracksFromiTunes('bts', 5);
+  const question = generateQuestion(tracks[0], tracks, 'lyrics');
 
-  if (tracks.length >= 4) {
-    const target = tracks[0];
+  // temporizer with 10 seconds duration and 1000 max points
+  const timer = new TimerModule(10, 1000);
 
-    // 2. generate question
-    const question = generateQuestion(target, tracks, 'lyrics');
-
-    console.log('🎯 Target Track:', target);
-    console.log('❓ Generated Question Object:', question);
-
-    statusText.innerHTML = `
-      <strong>Game Engine Test Passed!</strong><br>
-      Correct Song: <em>${question.correctAnswer}</em> by <strong>${question.artist}</strong><br><br>
-      <small style="color: var(--neon-cyan);">Shuffled Options:</small>
-      <ul style="list-style: none; padding: 0; margin-top: 8px;">
-        ${question.options.map(opt => `<li style="margin: 4px 0;">• ${opt} ${opt === question.correctAnswer ? '✅' : ''}</li>`).join('')}
-      </ul>
-    `;
-  } else {
-    statusText.textContent = "Not enough tracks returned from API.";
-  }
+  // start the timer and update the status text every second
+  timer.start(
+    (secondsLeft) => {
+      // Callback for each second (Tick)
+      const potentialPoints = timer.calculateScore();
+      statusText.innerHTML = `
+        <strong>Timer & Dynamic Decay Test</strong><br>
+        Track: <em>${question.correctAnswer}</em><br><br>
+        <span style="font-size: 2rem; color: var(--neon-pink);">${secondsLeft}s</span><br>
+        <small style="color: var(--neon-cyan);">Current Potential Score: ${potentialPoints} pts</small>
+      `;
+    },
+    () => {
+      // Callback when time is up
+      statusText.innerHTML += `<br><br><strong style="color: red;">⏰ TIME'S UP! (0 pts)</strong>`;
+    }
+  );
 });
