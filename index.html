@@ -1,28 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NEON TRACKS - Music Trivia & Lyrics</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Orbitron:wght@700;900&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="css/variable.css">
   <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/components.css">
+
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/jpg" href="./assets/images/nt.png">
+
+
 </head>
+
 <body>
-  <header>
-    <h1 class="logo">NEON <span>TRACKS</span></h1>
+
+  <header class="app-header">
+    <div class="logo-container">
+      <img src="./assets/images/nt.png" alt="Neon Tracks Logo" class="site-logo">
+      <h1 class="logo-text">NEON <span>TRACKS</span></h1>
+    </div>
   </header>
 
-  <main id="app-container">
-    <div class="card">
-      <h2>System Status</h2>
-      <p id="status-text">Loading modules...</p>
-    </div>
+  <main class="game-card home-card">
+    <h2 class="view-title">GAME CONFIG</h2>
+
+    <form id="game-config-form" class="config-form">
+      <!-- Selector de Modo -->
+      <div class="form-group">
+        <label class="config-label">GAME MODE</label>
+        <div class="options-grid">
+          <label class="radio-card active">
+            <input type="radio" name="gameMode" value="lyrics" checked>
+            <span class="radio-title">Guess the Lyrics</span>
+            <span class="radio-desc">Identify the song by its lyrics</span>
+          </label>
+          <label class="radio-card">
+            <input type="radio" name="gameMode" value="audio">
+            <span class="radio-title">Audio Preview</span>
+            <span class="radio-desc">Listen to a 30-second preview of the song</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- genre-->
+      <div class="form-group">
+        <label for="genre-select" class="config-label">MUSICAL GENRE</label>
+        <select id="genre-select" class="neon-select">
+          <option value="pop">Pop International</option>
+          <option value="rock">Rock</option>
+          <option value="dance">Dance & Electronic</option>
+          <option value="kpop">K-Pop</option>
+          <option value="latin">Latin & Urban </option>
+        </select>
+      </div>
+
+      <!-- start button -->
+      <button type="submit" class="btn-neon-primary">
+        <span>START GAME</span>
+      </button>
+    </form>
   </main>
 
-  <!-- type="module" Enables ES6 (import/export) syntax -->
-  <script type="module" src="js/main.js"></script>
+  <script type="module" src="./js/main.js"></script>
 </body>
+
 </html>

@@ -1,32 +1,164 @@
 /* Title / Logo Styles */
-.logo, h1 {
-  font-family: var(--font-heading);
-  font-size: 2.5rem;
-  font-weight: 900;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  text-align: center;
-  margin-bottom: 1.5rem;
-  
-  /* Gradient text (Cyan to Pink) */
-  background: linear-gradient(90deg, var(--neon-cyan) 0%, var(--neon-pink) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+.logo,
+h1 {
+    font-family: var(--font-heading);
+    font-size: 2.5rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-align: center;
+    margin-bottom: 1.5rem;
 
-  /* Neon Glow Effect */
-  filter: drop-shadow(0 0 12px rgba(0, 243, 255, 0.6)) 
-          drop-shadow(0 0 20px rgba(255, 0, 127, 0.4));
+    /* Gradient text (Cyan to Pink) */
+    background: linear-gradient(90deg, var(--neon-cyan) 0%, var(--neon-pink) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    /* Neon Glow Effect */
+    filter: drop-shadow(0 0 12px rgba(0, 243, 255, 0.6)) drop-shadow(0 0 20px rgba(255, 0, 127, 0.4));
 }
 
 /* Principal Card / Containers */
 .status-card,
 .game-card,
 main {
-  background-color: var(--bg-card);
-  border: var(--border-neon);
-  box-shadow: var(--glow-card);
-  border-radius: var(--radius-md);
-  color: var(--text-main);
-  padding: 2rem;
-  text-align: center;
+    background-color: var(--bg-card);
+    border: var(--border-neon);
+    box-shadow: var(--glow-card);
+    border-radius: var(--radius-md);
+    color: var(--text-main);
+    padding: 2rem;
+    text-align: center;
+}
+
+/* Home View Configuration Styles */
+.home-card {
+    max-width: 480px;
+    width: 90%;
+    margin: 0 auto;
+}
+
+.view-title {
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    letter-spacing: 2px;
+    color: var(--neon-cyan);
+    margin-bottom: 1.5rem;
+    text-shadow: 0 0 8px rgba(0, 243, 255, 0.4);
+}
+
+.config-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    width: 100%;
+}
+
+.config-label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: var(--text-muted);
+}
+
+/* Modes Grid */
+.options-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    width: 100%;
+}
+
+.radio-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-sm);
+    padding: 0.8rem;
+    cursor: pointer;
+    text-align: left;
+    transition: all var(--transition-fast);
+    display: flex;
+    flex-direction: column;
+}
+
+.radio-card input {
+    display: none;
+}
+
+.radio-card .radio-title {
+    font-size: 0.85rem;
+    font-weight: bold;
+    color: var(--text-main);
+    margin-bottom: 0.2rem;
+}
+
+.radio-card .radio-desc {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+}
+
+.radio-card:hover {
+    border-color: var(--neon-cyan);
+    box-shadow: 0 0 10px rgba(0, 243, 255, 0.2);
+}
+
+.radio-card.active,
+.radio-card:has(input:checked) {
+    border-color: var(--neon-pink);
+    background: rgba(255, 0, 127, 0.1);
+    box-shadow: var(--glow-pink);
+}
+
+/* Select neon style */
+.neon-select {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background-color: #0d0d18;
+    border: 1px solid var(--neon-purple);
+    border-radius: var(--radius-sm);
+    color: var(--text-main);
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    outline: none;
+    cursor: pointer;
+    transition: box-shadow var(--transition-fast);
+}
+
+.neon-select:focus {
+    box-shadow: var(--glow-purple);
+}
+
+/* primary button */
+.btn-neon-primary {
+    width: 100%;
+    padding: 1rem;
+    margin-top: 0.5rem;
+    background: transparent;
+    border: 2px solid var(--neon-cyan);
+    border-radius: var(--radius-sm);
+    color: var(--neon-cyan);
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all var(--transition-normal);
+    box-shadow: var(--glow-cyan);
+}
+
+.btn-neon-primary:hover {
+    background: var(--neon-cyan);
+    color: var(--bg-dark);
+    box-shadow: 0 0 20px rgba(0, 243, 255, 0.8), 0 0 40px rgba(0, 243, 255, 0.4);
+    transform: translateY(-2px);
 }
