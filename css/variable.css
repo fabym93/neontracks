@@ -1,17 +1,31 @@
 :root {
   /* Color Palette */
-  --bg-primary: #0D0E15;
-  --bg-surface: #1A1C29;
-  --border-color: #2D3142;
-  
-  --neon-purple: #A855F7;
-  --neon-cyan: #06B6D4;
-  --neon-pink: #EC4899;
-  
-  --text-main: #F3F4F6;
-  --text-muted: #9CA3AF;
+  --bg-dark: #050508;
+  --bg-card: rgba(18, 18, 28, 0.95);
+  --neon-cyan: #00f3ff;
+  --neon-pink: #ff007f;
+  --neon-purple: #9d00ff;
+  --neon-green: #00ff66;
+  --text-main: #ffffff;
+  --text-muted: #a0a0b8;
 
-  /* Fonts */
-  --font-title: 'Orbitron', sans-serif;
-  --font-body: 'Inter', sans-serif;
+  /* Typography */
+  --font-heading: 'Orbitron', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+
+  /* Neon Shadows & Glows */
+  --glow-cyan: 0 0 10px rgba(0, 243, 255, 0.5), 0 0 20px rgba(0, 243, 255, 0.3);
+  --glow-pink: 0 0 10px rgba(255, 0, 127, 0.5), 0 0 20px rgba(255, 0, 127, 0.3);
+  --glow-purple: 0 0 15px rgba(157, 0, 255, 0.4);
+  --glow-card: 0 0 15px rgba(157, 0, 255, 0.4), inset 0 0 15px rgba(157, 0, 255, 0.15);
+
+  /* Borders & Radius */
+  --border-neon: 1px solid rgba(157, 0, 255, 0.6);
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+
+  /* Transitions */
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s ease;
 }
