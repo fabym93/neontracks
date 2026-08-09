@@ -13,11 +13,8 @@
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/components.css">
 
-
   <!-- Favicon -->
   <link rel="icon" type="image/jpg" href="./assets/images/nt.png">
-
-
 </head>
 
 <body>
@@ -29,52 +26,150 @@
     </div>
   </header>
 
-  <main class="game-card home-card">
-    <h2 class="view-title">GAME CONFIG</h2>
+  <main class="game-container">
+    <!-- VIEW 1: HOME / GAME CONFIGURATION -->
+    <section id="home-view" class="game-card home-card ">
+      <h2 class="view-title">GAME CONFIG</h2>
 
-    <form id="game-config-form" class="config-form">
-      <!-- Selector de Modo -->
-      <div class="form-group">
-        <label class="config-label">GAME MODE</label>
-        <div class="options-grid">
-          <label class="radio-card active">
-            <input type="radio" name="gameMode" value="lyrics" checked>
-            <span class="radio-title">Guess the Lyrics</span>
-            <span class="radio-desc">Identify the song by its lyrics</span>
-          </label>
-          <label class="radio-card">
-            <input type="radio" name="gameMode" value="audio">
-            <span class="radio-title">Audio Preview</span>
-            <span class="radio-desc">Listen to a 30-second preview of the song</span>
-          </label>
+      <form id="game-config-form" class="config-form">
+        <!-- Selector mode -->
+        <div class="form-group">
+          <label class="config-label">GAME MODE</label>
+          <div class="options-grid">
+            <label class="radio-card active">
+              <input type="radio" name="gameMode" value="lyrics" checked>
+              <span class="radio-title">Guess the Lyrics</span>
+              <span class="radio-desc">Identify the song by its lyrics</span>
+            </label>
+            <label class="radio-card">
+              <input type="radio" name="gameMode" value="audio">
+              <span class="radio-title">Audio Preview</span>
+              <span class="radio-desc">Listen to a 30-second preview of the song</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Genre selector -->
+        <div class="form-group">
+          <label for="genre-select" class="config-label">MUSICAL GENRE</label>
+          <select id="genre-select" class="neon-select">
+            <option value="pop">Pop International</option>
+            <option value="rock">Rock</option>
+            <option value="dance">Dance & Electronic</option>
+            <option value="kpop">K-Pop</option>
+            <option value="latin">Latin & Urban</option>
+          </select>
+        </div>
+
+        <!-- Start button -->
+        <button type="submit" class="btn-neon-primary">
+          <span>START GAME</span>
+        </button>
+      </form>
+    </section>
+
+    <!-- VIEW 2: QUIZ / GAMEPLAY (Hidden by default) -->
+    <section id="quiz-view" class="game-card quiz-card hidden">
+      <!-- Top Bar: Timer & HUD -->
+      <header class="quiz-hud">
+        <div class="hud-item">
+          <span class="hud-label">SCORE</span>
+          <span id="hud-score" class="hud-value cyan">1250</span>
+        </div>
+
+        <div class="hud-item">
+          <span class="hud-label">STREAK</span>
+          <span id="hud-streak" class="hud-value pink">3x 🔥</span>
+        </div>
+      </header>
+
+      <!-- Timer Bar -->
+      <div class="timer-container">
+        <div id="timer-bar" class="timer-bar" style="width: 70%;"> </div>
+      </div>
+
+      <!-- Question Box -->
+      <div class="question-box">
+        <span class="question-number">QUESTION 03/10</span>
+        <p class="lyrics-snippet">
+          "Is this the real life? Is this just fantasy?<br>
+          Caught in a landslide, no escape from reality..."
+        </p>
+      </div>
+
+      <!-- Options Grid -->
+      <div class="options-grid">
+        <button class="btn-option">
+          <span class="option-letter">A</span>
+          <span class="option-text">Bohemian Rhapsody - Queen</span>
+        </button>
+
+        <button class="btn-option correct">
+          <span class="option-letter">B</span>
+          <span class="option-text">Don't Stop Me Now - Queen</span>
+        </button>
+
+        <button class="btn-option wrong">
+          <span class="option-letter">C</span>
+          <span class="option-text">Hotel California - Eagles</span>
+        </button>
+
+        <button class="btn-option">
+          <span class="option-letter">D</span>
+          <span class="option-text">Sweet Child O' Mine - Guns N' Roses</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- VIEW 3: GAME OVER / SUMMARY (Hidden by default) -->
+    <section id="summary-view" class="game-card summary-card hidden ">
+      <!-- Rank Badge & Title -->
+      <div class="summary-header">
+        <span class="rank-badge">CYBER LEGEND</span>
+        <h2 class="summary-title">GAME OVER</h2>
+      </div>
+
+      <!-- Main Score Box -->
+      <div class="final-score-box">
+        <span class="score-label">FINAL SCORE</span>
+        <h3 id="summary-total-score" class="score-value">8,450</h3>
+      </div>
+
+      <!-- Stats Grid -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <span class="stat-label">MAX STREAK</span>
+          <span id="summary-max-streak" class="stat-value pink">5x 🔥</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">ACCURACY</span>
+          <span id="summary-accuracy" class="stat-value green">80%</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">CORRECT</span>
+          <span id="summary-correct" class="stat-value cyan">8/10</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">AVG TIME</span>
+          <span id="summary-avg-time" class="stat-value purple">3.2s</span>
         </div>
       </div>
 
-      <!-- genre-->
-      <div class="form-group">
-        <label for="genre-select" class="config-label">MUSICAL GENRE</label>
-        <select id="genre-select" class="neon-select">
-          <option value="pop">Pop International</option>
-          <option value="rock">Rock</option>
-          <option value="dance">Dance & Electronic</option>
-          <option value="kpop">K-Pop</option>
-          <option value="latin">Latin & Urban </option>
-        </select>
+      <!-- Action Buttons -->
+      <div class="summary-actions">
+        <button id="btn-play-again" class="btn-neon-primary">
+          <span>PLAY AGAIN ↺</span>
+        </button>
+        <button id="btn-home-menu" class="btn-neon-secondary">
+          <span>HOME MENU</span>
+        </button>
       </div>
-
-      <!-- start button -->
-      <button type="submit" class="btn-neon-primary">
-        <span>START GAME</span>
-      </button>
-    </form>
+    </section>
   </main>
 
-  <script type="module" src="./js/main.js"></script>
-
-<!-- Post-Answer Review Modal (Hidden by default using the 'hidden' class) -->
+  <!-- Post-Answer Review Modal (Hidden by default using the 'hidden' class) -->
   <div id="review-modal" class="modal-overlay hidden">
     <div class="modal-card">
-      
       <!-- Modal Header / Status -->
       <div class="modal-header">
         <span class="modal-badge success">CORRECT!</span>
@@ -98,10 +193,10 @@
       <button id="btn-next-question" class="btn-neon-primary">
         <span>NEXT QUESTION →</span>
       </button>
-
     </div>
   </div>
 
+  <script type="module" src="./js/main.js"></script>
 </body>
 
 </html>

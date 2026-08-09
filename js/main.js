@@ -11,8 +11,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const sim4 = scoreMgr.recordCorrectAnswer(500); // streak4 -> x2
   const sim5 = scoreMgr.recordCorrectAnswer(500); // streak5 -> x3
   statusText.innerHTML = `
-    <strong>Streak & Multipliers Test Success!</strong><br><br>
+    <
+    strong>Streak & Multipliers Test Success!</strong><br><br>
     <div style="text-align: left; font-size: 0.85rem; line-height: 1.6;">
+
       • Round 1: +${sim1.pointsEarned} pts (Streak: ${sim1.streak}, Mult: ${sim1.multiplier}x)<br>
       • Round 2: +${sim2.pointsEarned} pts (Streak: ${sim2.streak}, Mult: ${sim2.multiplier}x)<br>
       • Round 3: +${sim3.pointsEarned} pts (Streak: ${sim3.streak}, Mult: ${sim3.multiplier}x)<br>
