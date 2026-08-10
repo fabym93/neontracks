@@ -3,6 +3,7 @@
  */
 
 const ITUNES_BASE_URL = 'https://itunes.apple.com/search';
+const LRCLIB_BASE_URL = 'https://lrclib.net/api/get';
 
 /**
  * Fetches tracks from iTunes API based on term/genre and filters those with audio previews.
@@ -13,15 +14,15 @@ const ITUNES_BASE_URL = 'https://itunes.apple.com/search';
 export async function fetchTracksFromiTunes(term = 'pop', limit = 25) {
   try {
     const url = `${ITUNES_BASE_URL}?term=${encodeURIComponent(term)}&media=music&entity=song&limit=${limit}`;
-    
+
     const response = await fetch(url);
-    
+
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
 
     const data = await response.json();
-    
+
     // filter songs that have audio preview (previewUrl) and structure the data
     const validTracks = data.results
       .filter(track => track.previewUrl && track.trackName && track.artistName)
@@ -40,5 +41,36 @@ export async function fetchTracksFromiTunes(term = 'pop', limit = 25) {
   } catch (error) {
     console.error('Error fetching tracks from iTunes:', error);
     return [];
+  }
+}
+
+
+/**
+ * Fetches plain synced or unsynced lyrics from LRCLIB API for a given track.
+ * @param {string} trackName - Title of the track
+ * @param {string} artistName - Name of the artist
+ * @returns {Promise<string|null>} Cleaned plain lyrics or null if not found
+ */
+export async function fetchLyricsFromLRCLIB(trackName, artistName) {
+  try {
+    const url = `${LRCLIB_BASE_URL}?track_name=${encodeURIComponent(trackName)}&artist_name=${encodeURIComponent(artistName)}`;
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      if (response.status === 404) {
+        console.warn(`Lyrics not found on LRCLIB for: "${trackName}" by ${artistName}`);
+        return null;
+      }
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+
+    // prefer plain lyrics if available, otherwise synced lyrics, else null
+    const lyrics = data.plainLyrics || data.syncedLyrics || null;
+    return lyrics;
+  } catch (error) {
+    console.error('Error fetching lyrics from LRCLIB:', error);
+    return null;
   }
 }
