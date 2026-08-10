@@ -74,3 +74,31 @@ export async function fetchLyricsFromLRCLIB(trackName, artistName) {
     return null;
   }
 }
+
+
+/** (helper function)
+ * Fetches track with guaranteed lyrics fallback logic
+ * @param {Array} tracksList - Array of tracks from iTunes
+ * @returns {Promise<Object|null>} Object containing track and its lyrics, or fallback error
+ */
+export async function getValidTrackWithLyrics(tracksList) {
+  if (!tracksList || tracksList.length === 0) {
+    return null;
+  }
+
+  for (const track of tracksList) {
+    const lyrics = await fetchLyricsFromLRCLIB(track.title, track.artist);
+    if (lyrics) {
+      return {
+        track,
+        lyrics
+      };
+    }
+  }
+
+  // Fallback if no tracks in the current list have lyrics
+  return {
+    track: tracksList[0],
+    lyrics: "♪ Instrumental / No lyrics preview available for this track ♪"
+  };
+}
