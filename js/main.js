@@ -11,7 +11,7 @@
 // });
 
 import { sanitizeText } from './utils.js';
-import { fetchTracksFromiTunes } from './apiService.js';
+import { fetchTracksFromiTunes } from './apiservice.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
   const statusText = document.getElementById('status-text');
