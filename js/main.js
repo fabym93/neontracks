@@ -1,32 +1,31 @@
-import { sanitizeText } from './utils.js';
 import { fetchTracksFromiTunes, getValidTrackWithLyrics } from './apiservice.js';
+import { generateQuestion } from './gameengine.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
   const statusText = document.getElementById('status-text');
-  statusText.textContent = "Testing API Fallback & Lyric Sanitizer...";
+  statusText.textContent = "Loading Game Engine Test...";
 
-  // 1. songs list from iTunes API (BTS as example)
-  const tracks = await fetchTracksFromiTunes('bts', 5);
+  // 1. Fetch a batch of tracks
+  const tracks = await fetchTracksFromiTunes('bts', 10);
 
-  // 2. obtain the first track with valid lyrics from LRCLIB API
-  const result = await getValidTrackWithLyrics(tracks);
+  if (tracks.length >= 4) {
+    const target = tracks[0];
 
-  if (result) {
-    // 3. sanitize the lyrics by removing the track title and artist name
-    const cleanLyrics = sanitizeText(result.lyrics, [result.track.title, result.track.artist]);
+    // 2. generate question
+    const question = generateQuestion(target, tracks, 'lyrics');
 
-    console.log('🎵 Selected Track:', result.track);
-    console.log('🔒 Censored Lyrics:', cleanLyrics);
+    console.log('🎯 Target Track:', target);
+    console.log('❓ Generated Question Object:', question);
 
     statusText.innerHTML = `
-      <strong>Fallback & Sanitizer Test Success!</strong><br>
-      Track: <em>${result.track.title}</em> - <strong>${result.track.artist}</strong><br><br>
-      <small style="color: var(--neon-cyan);">Censored Snippet:</small><br>
-      <p style="font-size: 0.85rem; font-style: italic; margin-top: 8px;">
-        "${cleanLyrics.substring(0, 120)}..."
-      </p>
+      <strong>Game Engine Test Passed!</strong><br>
+      Correct Song: <em>${question.correctAnswer}</em> by <strong>${question.artist}</strong><br><br>
+      <small style="color: var(--neon-cyan);">Shuffled Options:</small>
+      <ul style="list-style: none; padding: 0; margin-top: 8px;">
+        ${question.options.map(opt => `<li style="margin: 4px 0;">• ${opt} ${opt === question.correctAnswer ? '✅' : ''}</li>`).join('')}
+      </ul>
     `;
   } else {
-    statusText.textContent = "Could not find valid tracks with lyrics.";
+    statusText.textContent = "Not enough tracks returned from API.";
   }
 });
